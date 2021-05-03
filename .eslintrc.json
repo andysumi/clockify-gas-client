@@ -6,8 +6,11 @@
     "googleappsscript/googleappsscript": true
   },
   "globals": {
+    // External Libraries
+    "GasTap": true,
     // Our classes
-    "ClockifyClient": false
+    "ClockifyClient": false,
+    "TestCommon": false
   },
   "rules": {
     "semi": "warn",
