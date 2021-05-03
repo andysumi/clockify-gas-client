@@ -5,7 +5,10 @@
   "env": {
     "googleappsscript/googleappsscript": true
   },
-  "globals": {},
+  "globals": {
+    // Our classes
+    "ClockifyClient": false
+  },
   "rules": {
     "semi": "warn",
     "quotes": ["warn", "single"],
