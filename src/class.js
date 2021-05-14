@@ -12,6 +12,17 @@
       return this.fetchGet_('/workspaces');
     };
 
+    ClockifyClient.prototype.getAllClients = function (workspaceId, params, page, pageSize, sortColumn, sortOrder) {
+      if (!workspaceId) throw new Error('workspaceId must be specified');
+
+      params = params ? params : {};
+      if (page) params['page'] = page;
+      if (pageSize) params['page-size'] = pageSize;
+      if (sortColumn) params['sort-column'] = sortColumn;
+      if (sortOrder) params['sort-order'] = sortOrder;
+      return this.fetchGet_('/workspaces/' + workspaceId + '/clients', params);
+    };
+
     ClockifyClient.prototype.fetchGet_ = function (path, params) {
       params = params ? params : {};
       return this.fetch_('get', path, params);
