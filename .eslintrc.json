@@ -3,13 +3,15 @@
   "plugins": ["googleappsscript"],
   "parserOptions": {},
   "env": {
+    "es6": true,
     "googleappsscript/googleappsscript": true
   },
   "globals": {
     // External Libraries
     "GasTap": true,
     // Our classes
-    "ClockifyClient": false,
+    "Clockify": false,
+    "Client": false,
     "TestCommon": false
   },
   "rules": {

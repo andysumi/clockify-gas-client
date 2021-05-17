@@ -1,10 +1,16 @@
-var TestCommon = function () { // eslint-disable-line no-redeclare
-  var properties = PropertiesService.getScriptProperties();
-  this.apiKey = properties.getProperty('API_KEY');
-  this.workspaceId = properties.getProperty('WORKSPACE_ID');
-};
+class TestCommon { // eslint-disable-line
+  constructor() {
+    const properties = PropertiesService.getScriptProperties();
+    this.apiKey_ = properties.getProperty('API_KEY');
+    this.workspaceId_ = properties.getProperty('WORKSPACE_ID');
+    this.clockify_ = new Clockify(this.apiKey_);
+  }
 
-TestCommon.prototype.getClient = function () {
-  this.client = new ClockifyClient(this.apiKey);
-  return this.client;
-};
+  get workspaceId() {
+    return this.workspaceId_;
+  }
+
+  get clockify() {
+    return this.clockify_;
+  }
+}

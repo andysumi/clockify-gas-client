@@ -4,7 +4,7 @@
  * @return {ClockifyClient} Clockify Clientのインスタンス
  */
 function create(apiKey) { // eslint-disable-line no-unused-vars
-  return new ClockifyClient(apiKey);
+  return new Clockify(apiKey);
 }
 
 /**
@@ -30,7 +30,7 @@ function getAllClients(workspaceId, params, page, pageSize, sortColumn, sortOrde
 }
 
 /**
- * Workspace内のClientを取得する
+ * Clientを作成する
  * @param {string} workspaceId 【必須】
  * @param {string} name 【必須】
  * @return {Object} 処理結果
