@@ -49,3 +49,13 @@ function createClient(workspaceId, name) { // eslint-disable-line no-unused-vars
 function updateClient(workspaceId, clientId, params) { // eslint-disable-line no-unused-vars
   throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
 }
+
+/**
+ * Clientを削除する
+ * @param {string} workspaceId 【必須】Workspaceを識別するID
+ * @param {string} clientId 【必須】Clientを識別するID
+ * @return {Object} 処理結果
+ */
+function deleteClient(workspaceId, clientId) { // eslint-disable-line no-unused-vars
+  throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
+}

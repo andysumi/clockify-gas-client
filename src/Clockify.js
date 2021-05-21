@@ -59,4 +59,17 @@ class Clockify {  // eslint-disable-line
 
     return this.client_.fetchPut(`/workspaces/${workspaceId}/clients/${clientId}`, params);
   }
+
+  /**
+   * Clientを削除する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} clientId 【必須】Clientを識別するID
+   * @return {Object} 処理結果
+   */
+  deleteClient(workspaceId, clientId) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!clientId) throw new Error('"clientId" must be specified');
+
+    return this.client_.fetchDelete(`/workspaces/${workspaceId}/clients/${clientId}`);
+  }
 }
