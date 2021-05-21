@@ -13,7 +13,7 @@ class Clockify {  // eslint-disable-line
 
   /**
    * Workspace内のClientを取得する
-   * @param {string} workspaceId 【必須】
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
    * @param {Object} params
    * @param {number} [page=1]
    * @param {number} [pageSize=50]
@@ -29,12 +29,12 @@ class Clockify {  // eslint-disable-line
     if (pageSize) params['page-size'] = pageSize;
     if (sortColumn) params['sort-column'] = sortColumn;
     if (sortOrder) params['sort-order'] = sortOrder;
-    return this.client_.fetchGet('/workspaces/' + workspaceId + '/clients', params);
+    return this.client_.fetchGet(`/workspaces/${workspaceId}/clients`, params);
   }
 
   /**
    * Clientを作成する
-   * @param {string} workspaceId 【必須】
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
    * @param {string} name 【必須】
    * @return {Object} 処理結果
    */
@@ -42,6 +42,21 @@ class Clockify {  // eslint-disable-line
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
     if (!name) throw new Error('"name" must be specified');
 
-    return this.client_.fetchPost('/workspaces/' + workspaceId + '/clients', { name: name });
+    return this.client_.fetchPost(`/workspaces/${workspaceId}/clients`, { name: name });
+  }
+
+  /**
+   * Clientを更新する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} clientId 【必須】Clientを識別するID
+   * @param {Object} params
+   * @return {Object} 処理結果
+   */
+  updateClient(workspaceId, clientId, params) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!clientId) throw new Error('"clientId" must be specified');
+    if (!params) throw new Error('"params" must be specified');
+
+    return this.client_.fetchPut(`/workspaces/${workspaceId}/clients/${clientId}`, params);
   }
 }

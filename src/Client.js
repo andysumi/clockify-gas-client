@@ -28,6 +28,17 @@ class Client {  // eslint-disable-line
     return this.fetch_('post', path, null, payload);
   }
 
+  /**
+   * Putリクエストを送信する
+   * @param {string} path
+   * @param {Object} payload
+   * @returns {Object} リクエスト結果
+   */
+  fetchPut(path, payload) {
+    payload = payload ? payload : {};
+    return this.fetch_('put', path, null, payload);
+  }
+
   fetch_(method, path, params, payload) {
     const url = this.getApiUrl_(path, params);
     var option = {
