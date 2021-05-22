@@ -38,14 +38,11 @@ function testClientMethods_(test, common) {
     t.ok(clients[0] instanceof Object, 'Objectで取得できること');
 
     // params指定あり
-    const clientName = '株式会社ぴよ';
     const client = common.clockify.getAllClients(common.workspaceId, {
       archived: false,
-      name: clientName,
+      name: common.client.name,
     });
-    t.equal(client[0].workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
-    t.equal(client[0].name, clientName, '"name"が正しいこと');
-    t.equal(client[0].archived, false, '"archived"が正しいこと');
+    t.deepEqual(client[0], common.client, 'Clientのデータが正しいこと');
   });
 
   test('Client CRUD', function (t) {
@@ -93,5 +90,19 @@ function testProjectMethods_(test, common) {
   test('getSpecificProject()', function (t) {
     const project = common.clockify.getSpecificProject(common.workspaceId, common.project.id);
     t.deepEqual(project, common.project, 'Projectのデータが正しいこと');
+  });
+
+  test('Project CRUD', function (t) {
+    //Create
+    let projectName = 'Sandbox' + Utilities.formatDate(new Date(), 'JST', 'yyyyMMddHHmmss');
+    const createdProject = common.clockify.createProject(common.workspaceId, projectName, {
+      clientId: common.client.id,
+      color:    '#f44336',
+      note:     'This is project\'s note',
+      billable: false,
+      isPublic: true
+    });
+    t.equal(createdProject.workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
+    t.equal(createdProject.name, projectName, '"name"が正しいこと');
   });
 }
