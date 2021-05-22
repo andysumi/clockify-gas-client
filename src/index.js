@@ -94,3 +94,14 @@ function getSpecificProject(workspaceId, projectId) { // eslint-disable-line no-
 function createProject(workspaceId, name, option) { // eslint-disable-line no-unused-vars
   throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
 }
+
+/**
+ * Projectを更新する
+ * @param {string} workspaceId 【必須】Workspaceを識別するID
+ * @param {string} projectId 【必須】Projectを識別するID
+ * @param {Object} params
+ * @return {Object} 処理結果
+ */
+function updateProject(workspaceId, projectId, params) { // eslint-disable-line no-unused-vars
+  throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
+}

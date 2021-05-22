@@ -126,4 +126,19 @@ class Clockify {  // eslint-disable-line
     }
     return this.client_.fetchPost(`/workspaces/${workspaceId}/projects`, payload);
   }
+
+  /**
+   * Projectを更新する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @param {Object} params
+   * @return {Object} 処理結果
+   */
+  updateProject(workspaceId, projectId, params) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"workspaceId" must be specified');
+    if (!params) throw new Error('"params" must be specified');
+
+    return this.client_.fetchPut(`/workspaces/${workspaceId}/projects/${projectId}`, params);
+  }
 }

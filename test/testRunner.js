@@ -95,14 +95,25 @@ function testProjectMethods_(test, common) {
   test('Project CRUD', function (t) {
     //Create
     let projectName = 'Sandbox' + Utilities.formatDate(new Date(), 'JST', 'yyyyMMddHHmmss');
-    const createdProject = common.clockify.createProject(common.workspaceId, projectName, {
+    const option = {
       clientId: common.client.id,
-      color:    '#f44336',
-      note:     'This is project\'s note',
+      color: '#f44336',
+      note: 'This is project\'s note',
       billable: false,
       isPublic: true
-    });
-    t.equal(createdProject.workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
+    };
+    const createdProject = common.clockify.createProject(common.workspaceId, projectName, option);
     t.equal(createdProject.name, projectName, '"name"が正しいこと');
+    t.equal(createdProject.clientId, option.clientId, '"clientId"が正しいこと');
+    t.equal(createdProject.color, option.color, '"color"が正しいこと');
+    t.equal(createdProject.note, option.note, '"note"が正しいこと');
+    t.equal(createdProject.billable, option.billable, '"billable"が正しいこと');
+    t.equal(createdProject.public, option.isPublic, '"public"が正しいこと');
+
+    // Update
+    projectName = `Updated ${projectName}`;
+    const updatedClient = common.clockify.updateProject(common.workspaceId, createdProject.id, { name: projectName, archived: true });
+    t.equal(updatedClient.name, projectName, '"name"が正しいこと');
+    t.equal(updatedClient.archived, true, '"archived"が正しいこと');
   });
 }
