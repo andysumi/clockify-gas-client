@@ -10,6 +10,7 @@ function testRunner() { // eslint-disable-line no-unused-vars
     /***** Test cases ******************************/
     testWorkspaceMethods_(test, common);
     testClientMethods_(test, common);
+    testProjectMethods_(test, common);
     /***********************************************/
   } catch (error) {
     test('Exception occurred', function f(assert) {
@@ -71,5 +72,24 @@ function testClientMethods_(test, common) {
     t.equal(deletedClient.id, updatedClient.id, '"clientId"が正しいこと');
     t.equal(deletedClient.name, clientName, '"name"が正しいこと');
     t.equal(deletedClient.archived, true, '"archived"が正しいこと');
+  });
+}
+
+function testProjectMethods_(test, common) {
+  test('getAllProjects()', function (t) {
+    // params指定なし
+    const clients = common.clockify.getAllProjects(common.workspaceId);
+    t.ok(clients.length > 0, 'データが取得できること');
+    t.ok(clients[0] instanceof Object, 'Objectで取得できること');
+
+    // params指定あり
+    const projectName = 'プロジェクト A';
+    const client = common.clockify.getAllProjects(common.workspaceId, {
+      archived: false,
+      name: projectName,
+    });
+    t.equal(client[0].workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
+    t.equal(client[0].name, projectName, '"name"が正しいこと');
+    t.equal(client[0].archived, false, '"archived"が正しいこと');
   });
 }

@@ -59,3 +59,17 @@ function updateClient(workspaceId, clientId, params) { // eslint-disable-line no
 function deleteClient(workspaceId, clientId) { // eslint-disable-line no-unused-vars
   throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
 }
+
+/**
+ * Workspace内のProjectを取得する
+ * @param {string} workspaceId 【必須】Workspaceを識別するID
+ * @param {Object} params
+ * @param {number} [page=1]
+ * @param {number} [pageSize=50]
+ * @param {string} sortColumn "NAME", "CLIENT_NAME", "DURATION"
+ * @param {string} sortOrder "ASCENDING" or "DESCENDING"
+ * @return {Array<Object>} 処理結果
+ */
+function getAllProjects(workspaceId, params, page, pageSize, sortColumn, sortOrder) { // eslint-disable-line no-unused-vars
+  throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
+}
