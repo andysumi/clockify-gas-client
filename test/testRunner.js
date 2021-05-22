@@ -78,18 +78,20 @@ function testClientMethods_(test, common) {
 function testProjectMethods_(test, common) {
   test('getAllProjects()', function (t) {
     // params指定なし
-    const clients = common.clockify.getAllProjects(common.workspaceId);
-    t.ok(clients.length > 0, 'データが取得できること');
-    t.ok(clients[0] instanceof Object, 'Objectで取得できること');
+    const projects = common.clockify.getAllProjects(common.workspaceId);
+    t.ok(projects.length > 0, 'データが取得できること');
+    t.ok(projects[0] instanceof Object, 'Objectで取得できること');
 
     // params指定あり
-    const projectName = 'プロジェクト A';
-    const client = common.clockify.getAllProjects(common.workspaceId, {
+    const project = common.clockify.getAllProjects(common.workspaceId, {
       archived: false,
-      name: projectName,
+      name: common.project.name,
     });
-    t.equal(client[0].workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
-    t.equal(client[0].name, projectName, '"name"が正しいこと');
-    t.equal(client[0].archived, false, '"archived"が正しいこと');
+    t.deepEqual(project[0], common.project, 'Projectのデータが正しいこと');
+  });
+
+  test('getSpecificProject()', function (t) {
+    const project = common.clockify.getSpecificProject(common.workspaceId, common.project.id);
+    t.deepEqual(project, common.project, 'Projectのデータが正しいこと');
   });
 }

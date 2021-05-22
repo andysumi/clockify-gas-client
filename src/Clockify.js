@@ -93,4 +93,17 @@ class Clockify {  // eslint-disable-line
     if (sortOrder) params['sort-order'] = sortOrder;
     return this.client_.fetchGet(`/workspaces/${workspaceId}/projects`, params);
   }
+
+  /**
+   * 指定したProjectを取得する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @return {Object} 処理結果
+   */
+  getSpecificProject(workspaceId, projectId) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
+
+    return this.client_.fetchGet(`/workspaces/${workspaceId}/projects/${projectId}`);
+  }
 }
