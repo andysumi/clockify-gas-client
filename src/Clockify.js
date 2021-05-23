@@ -141,13 +141,13 @@ class Clockify {  // eslint-disable-line
   }
 
   /**
- * Projectの見積もりを更新する
- * @param {string} workspaceId 【必須】Workspaceを識別するID
- * @param {string} projectId 【必須】Projectを識別するID
- * @param {{active: boolean, type: string, estimate: string, reset: string|null}} timeEstimate
- * @param {{active: boolean, type: string, estimate: number, reset: string|null}} budgetEstimate
- * @return {Object} 処理結果
- */
+   * Projectの見積もりを更新する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @param {{active: boolean, type: string, estimate: string, reset: string|null}} timeEstimate
+   * @param {{active: boolean, type: string, estimate: number, reset: string|null}} budgetEstimate
+   * @return {Object} 処理結果
+   */
   updateProjectEstimate(workspaceId, projectId, timeEstimate, budgetEstimate) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
     if (!projectId) throw new Error('"workspaceId" must be specified');
@@ -160,5 +160,18 @@ class Clockify {  // eslint-disable-line
       params['budgetEstimate'] = budgetEstimate;
     }
     return this.client_.fetchPatch(`/workspaces/${workspaceId}/projects/${projectId}/estimate`, params);
+  }
+
+  /**
+   * Projectを削除する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @return {Object} 処理結果
+   */
+  deleteProject(workspaceId, projectId) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
+
+    return this.client_.fetchDelete(`/workspaces/${workspaceId}/projects/${projectId}`);
   }
 }

@@ -55,20 +55,18 @@ function testClientMethods_(test, common) {
 
     // Update
     clientName = `Updated ${clientName}`;
-    const updatedClient = common.clockify.updateClient(common.workspaceId, createdClient.id, { name: clientName, archived: true });
-    t.ok(updatedClient instanceof Object, 'Objectで取得できること');
-    t.equal(updatedClient.workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
-    t.equal(updatedClient.id, createdClient.id, '"clientId"が正しいこと');
+    const updatedClient = common.clockify.updateClient(common.workspaceId, createdClient.id, {
+      name:     clientName,
+      archived: true
+    });
     t.equal(updatedClient.name, clientName, '"name"が正しいこと');
     t.equal(updatedClient.archived, true, '"archived"が正しいこと');
 
     // Delete
     const deletedClient = common.clockify.deleteClient(common.workspaceId, updatedClient.id);
     t.ok(deletedClient instanceof Object, 'Objectで取得できること');
-    t.equal(deletedClient.workspaceId, common.workspaceId, '"workspaceId"が正しいこと');
-    t.equal(deletedClient.id, updatedClient.id, '"clientId"が正しいこと');
-    t.equal(deletedClient.name, clientName, '"name"が正しいこと');
-    t.equal(deletedClient.archived, true, '"archived"が正しいこと');
+
+    t.equal(common.clockify.getAllClients(common.workspaceId, { name: clientName }).length, 0, 'Clientが存在しないこと');
   });
 }
 
@@ -117,13 +115,19 @@ function testProjectMethods_(test, common) {
       estimate: 'PT1H30M',
       resetOption: null
     };
-    const estimatedClient = common.clockify.updateProjectEstimate(common.workspaceId, createdProject.id, estimate);
-    t.deepEqual(estimatedClient.timeEstimate, estimate, '"timeEstimate"が正しいこと');
+    const estimatedProject = common.clockify.updateProjectEstimate(common.workspaceId, createdProject.id, estimate);
+    t.deepEqual(estimatedProject.timeEstimate, estimate, '"timeEstimate"が正しいこと');
 
     // Update
     projectName = `Updated ${projectName}`;
-    const updatedClient = common.clockify.updateProject(common.workspaceId, createdProject.id, { name: projectName, archived: true });
-    t.equal(updatedClient.name, projectName, '"name"が正しいこと');
-    t.equal(updatedClient.archived, true, '"archived"が正しいこと');
+    const updatedProject = common.clockify.updateProject(common.workspaceId, createdProject.id, { name: projectName, archived: true });
+    t.equal(updatedProject.name, projectName, '"name"が正しいこと');
+    t.equal(updatedProject.archived, true, '"archived"が正しいこと');
+
+    // Delete
+    const deletedClient = common.clockify.deleteProject(common.workspaceId, createdProject.id);
+    t.ok(deletedClient instanceof Object, 'Objectで取得できること');
+
+    t.notOk(common.clockify.getSpecificProject(common.workspaceId, createdProject.id), 'Projectが存在しないこと');
   });
 }
