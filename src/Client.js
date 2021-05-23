@@ -40,6 +40,17 @@ class Client {  // eslint-disable-line
   }
 
   /**
+   * Patchリクエストを送信する
+   * @param {string} path
+   * @param {Object} payload
+   * @returns {Object} リクエスト結果
+   */
+  fetchPatch(path, payload) {
+    payload = payload ? payload : {};
+    return this.fetch_('patch', path, null, payload);
+  }
+
+  /**
    * Deleteリクエストを送信する
    * @param {string} path
    * @returns {Object} リクエスト結果

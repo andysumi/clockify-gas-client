@@ -116,15 +116,14 @@ class Clockify {  // eslint-disable-line
    */
   createProject(workspaceId, name, option) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
-    if (!name) throw new Error('"name" must be specified');
 
-    let payload = { name: name };
+    let params = { name: name };
     if (option) {
       for (const key in option) {
-        payload[key] = option[key];
+        params[key] = option[key];
       }
     }
-    return this.client_.fetchPost(`/workspaces/${workspaceId}/projects`, payload);
+    return this.client_.fetchPost(`/workspaces/${workspaceId}/projects`, params);
   }
 
   /**
@@ -137,8 +136,29 @@ class Clockify {  // eslint-disable-line
   updateProject(workspaceId, projectId, params) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
     if (!projectId) throw new Error('"workspaceId" must be specified');
-    if (!params) throw new Error('"params" must be specified');
 
     return this.client_.fetchPut(`/workspaces/${workspaceId}/projects/${projectId}`, params);
+  }
+
+  /**
+ * Projectの見積もりを更新する
+ * @param {string} workspaceId 【必須】Workspaceを識別するID
+ * @param {string} projectId 【必須】Projectを識別するID
+ * @param {{active: boolean, type: string, estimate: string, reset: string|null}} timeEstimate
+ * @param {{active: boolean, type: string, estimate: number, reset: string|null}} budgetEstimate
+ * @return {Object} 処理結果
+ */
+  updateProjectEstimate(workspaceId, projectId, timeEstimate, budgetEstimate) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"workspaceId" must be specified');
+
+    let params = {};
+    if (timeEstimate) {
+      params['timeEstimate'] = timeEstimate;
+    }
+    if (budgetEstimate) {
+      params['budgetEstimate'] = budgetEstimate;
+    }
+    return this.client_.fetchPatch(`/workspaces/${workspaceId}/projects/${projectId}/estimate`, params);
   }
 }

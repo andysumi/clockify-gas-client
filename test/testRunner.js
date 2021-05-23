@@ -110,6 +110,16 @@ function testProjectMethods_(test, common) {
     t.equal(createdProject.billable, option.billable, '"billable"が正しいこと');
     t.equal(createdProject.public, option.isPublic, '"public"が正しいこと');
 
+    // Update estimate
+    const estimate = {
+      active: true,
+      type: 'MANUAL',
+      estimate: 'PT1H30M',
+      resetOption: null
+    };
+    const estimatedClient = common.clockify.updateProjectEstimate(common.workspaceId, createdProject.id, estimate);
+    t.deepEqual(estimatedClient.timeEstimate, estimate, '"timeEstimate"が正しいこと');
+
     // Update
     projectName = `Updated ${projectName}`;
     const updatedClient = common.clockify.updateProject(common.workspaceId, createdProject.id, { name: projectName, archived: true });
