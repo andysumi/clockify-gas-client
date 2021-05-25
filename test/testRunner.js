@@ -147,4 +147,9 @@ function testTaskMethods_(test, common) {
     });
     t.deepEqual(task[0], common.task, 'Taskのデータが正しいこと');
   });
+
+  test('getSpecificTask()', function (t) {
+    const task = common.clockify.getSpecificTask(common.workspaceId, common.project.id, common.task.id);
+    t.deepEqual(task, common.task, 'Taskのデータが正しいこと');
+  });
 }

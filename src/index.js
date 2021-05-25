@@ -140,3 +140,14 @@ function deleteProject(workspaceId, projectId) { // eslint-disable-line no-unuse
 function getAllTasks(workspaceId, projectId, params, page, pageSize) { // eslint-disable-line no-unused-vars
   throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
 }
+
+/**
+ * 指定したTaskを取得する
+ * @param {string} workspaceId 【必須】Workspaceを識別するID
+ * @param {string} projectId 【必須】Projectを識別するID
+ * @param {string} taskId 【必須】Taskを識別するID
+ * @return {Object} 処理結果
+ */
+function getSpecificTask(workspaceId, projectId, taskId) { // eslint-disable-line no-unused-vars
+  throw new Error('このメソッドは直接呼び出せません。createメソッドで取得したインスタンスより呼び出してください。');
+}
