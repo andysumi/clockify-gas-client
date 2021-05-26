@@ -152,4 +152,13 @@ function testTaskMethods_(test, common) {
     const task = common.clockify.getSpecificTask(common.workspaceId, common.project.id, common.task.id);
     t.deepEqual(task, common.task, 'Taskのデータが正しいこと');
   });
+
+  test('Client CRUD', function (t) {
+    //Create
+    let taskName = 'Sandbox' + Utilities.formatDate(new Date(), 'JST', 'yyyyMMddHHmmss');
+    const createdTask = common.clockify.createTask(common.workspaceId, common.project.id, taskName);
+    t.equal(createdTask.projectId, common.project.id, '"projectId"が正しいこと');
+    t.equal(createdTask.name, taskName, '"name"が正しいこと');
+    t.equal(createdTask.status, 'ACTIVE', '"archived"が正しいこと');
+  });
 }
