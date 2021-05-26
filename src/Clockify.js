@@ -40,7 +40,6 @@ class Clockify {  // eslint-disable-line
    */
   createClient(workspaceId, name) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
-    if (!name) throw new Error('"name" must be specified');
 
     return this.client_.fetchPost(`/workspaces/${workspaceId}/clients`, { name: name });
   }
@@ -55,7 +54,6 @@ class Clockify {  // eslint-disable-line
   updateClient(workspaceId, clientId, params) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
     if (!clientId) throw new Error('"clientId" must be specified');
-    if (!params) throw new Error('"params" must be specified');
 
     return this.client_.fetchPut(`/workspaces/${workspaceId}/clients/${clientId}`, params);
   }
@@ -135,7 +133,7 @@ class Clockify {  // eslint-disable-line
    */
   updateProject(workspaceId, projectId, params) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
-    if (!projectId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
 
     return this.client_.fetchPut(`/workspaces/${workspaceId}/projects/${projectId}`, params);
   }
@@ -150,7 +148,7 @@ class Clockify {  // eslint-disable-line
    */
   updateProjectEstimate(workspaceId, projectId, timeEstimate, budgetEstimate) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
-    if (!projectId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
 
     let params = {};
     if (timeEstimate) {
@@ -186,7 +184,7 @@ class Clockify {  // eslint-disable-line
    */
   getAllTasks(workspaceId, projectId, params, page, pageSize) {
     if (!workspaceId) throw new Error('"workspaceId" must be specified');
-    if (!projectId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
 
     params = params ? params : {};
     if (page) params['page'] = page;
@@ -228,5 +226,21 @@ class Clockify {  // eslint-disable-line
       }
     }
     return this.client_.fetchPost(`/workspaces/${workspaceId}/projects/${projectId}/tasks`, params);
+  }
+
+  /**
+   * Taskを更新する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @param {string} taskId 【必須】Taskを識別するID
+   * @param {Object} params
+   * @return {Object} 処理結果
+   */
+  updateTask(workspaceId, projectId, taskId, params) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
+    if (!taskId) throw new Error('"taskId" must be specified');
+
+    return this.client_.fetchPut(`/workspaces/${workspaceId}/projects/${projectId}/tasks/${taskId}`, params);
   }
 }

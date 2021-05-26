@@ -160,5 +160,10 @@ function testTaskMethods_(test, common) {
     t.equal(createdTask.projectId, common.project.id, '"projectId"が正しいこと');
     t.equal(createdTask.name, taskName, '"name"が正しいこと');
     t.equal(createdTask.status, 'ACTIVE', '"archived"が正しいこと');
+
+    taskName = `Updated ${taskName}`;
+    const updatedTask = common.clockify.updateTask(common.workspaceId, common.project.id, createdTask.id, { name: taskName, status: 'DONE' });
+    t.equal(updatedTask.name, taskName, '"name"が正しいこと');
+    t.equal(updatedTask.status, 'DONE', '"status"が正しいこと');
   });
 }
