@@ -243,4 +243,19 @@ class Clockify {  // eslint-disable-line
 
     return this.client_.fetchPut(`/workspaces/${workspaceId}/projects/${projectId}/tasks/${taskId}`, params);
   }
+
+  /**
+   * Taskを削除する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} projectId 【必須】Projectを識別するID
+   * @param {string} taskId 【必須】Taskを識別するID
+   * @return {Object} 処理結果
+   */
+  deleteTask(workspaceId, projectId, taskId) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!projectId) throw new Error('"projectId" must be specified');
+    if (!taskId) throw new Error('"taskId" must be specified');
+
+    return this.client_.fetchDelete(`/workspaces/${workspaceId}/projects/${projectId}/tasks/${taskId}`);
+  }
 }

@@ -165,5 +165,11 @@ function testTaskMethods_(test, common) {
     const updatedTask = common.clockify.updateTask(common.workspaceId, common.project.id, createdTask.id, { name: taskName, status: 'DONE' });
     t.equal(updatedTask.name, taskName, '"name"が正しいこと');
     t.equal(updatedTask.status, 'DONE', '"status"が正しいこと');
+
+    // Delete
+    const deletedTask = common.clockify.deleteTask(common.workspaceId, common.project.id, createdTask.id);
+    t.ok(deletedTask instanceof Object, 'Objectで取得できること');
+
+    t.notOk(common.clockify.getSpecificTask(common.workspaceId, common.project.id, createdTask.id), 'Taskが存在しないこと');
   });
 }
