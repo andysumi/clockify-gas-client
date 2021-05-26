@@ -11,6 +11,7 @@ function testRunner() { // eslint-disable-line no-unused-vars
     testWorkspaceMethods_(test, common);
     testClientMethods_(test, common);
     testProjectMethods_(test, common);
+    testTaskMethods_(test, common);
     /***********************************************/
   } catch (error) {
     test('Exception occurred', function f(assert) {
@@ -129,5 +130,46 @@ function testProjectMethods_(test, common) {
     t.ok(deletedClient instanceof Object, 'Objectで取得できること');
 
     t.notOk(common.clockify.getSpecificProject(common.workspaceId, createdProject.id), 'Projectが存在しないこと');
+  });
+}
+
+function testTaskMethods_(test, common) {
+  test('getAllTasks()', function (t) {
+    // params指定なし
+    const tasks = common.clockify.getAllTasks(common.workspaceId, common.project.id);
+    t.ok(tasks.length > 0, 'データが取得できること');
+    t.ok(tasks[0] instanceof Object, 'Objectで取得できること');
+
+    // params指定あり
+    const task = common.clockify.getAllTasks(common.workspaceId, common.project.id, {
+      'is-active': true,
+      name: common.task.name,
+    });
+    t.deepEqual(task[0], common.task, 'Taskのデータが正しいこと');
+  });
+
+  test('getSpecificTask()', function (t) {
+    const task = common.clockify.getSpecificTask(common.workspaceId, common.project.id, common.task.id);
+    t.deepEqual(task, common.task, 'Taskのデータが正しいこと');
+  });
+
+  test('Client CRUD', function (t) {
+    //Create
+    let taskName = 'Sandbox' + Utilities.formatDate(new Date(), 'JST', 'yyyyMMddHHmmss');
+    const createdTask = common.clockify.createTask(common.workspaceId, common.project.id, taskName);
+    t.equal(createdTask.projectId, common.project.id, '"projectId"が正しいこと');
+    t.equal(createdTask.name, taskName, '"name"が正しいこと');
+    t.equal(createdTask.status, 'ACTIVE', '"archived"が正しいこと');
+
+    taskName = `Updated ${taskName}`;
+    const updatedTask = common.clockify.updateTask(common.workspaceId, common.project.id, createdTask.id, { name: taskName, status: 'DONE' });
+    t.equal(updatedTask.name, taskName, '"name"が正しいこと');
+    t.equal(updatedTask.status, 'DONE', '"status"が正しいこと');
+
+    // Delete
+    const deletedTask = common.clockify.deleteTask(common.workspaceId, common.project.id, createdTask.id);
+    t.ok(deletedTask instanceof Object, 'Objectで取得できること');
+
+    t.notOk(common.clockify.getSpecificTask(common.workspaceId, common.project.id, createdTask.id), 'Taskが存在しないこと');
   });
 }
