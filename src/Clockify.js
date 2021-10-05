@@ -258,4 +258,36 @@ class Clockify {  // eslint-disable-line
 
     return this.client_.fetchDelete(`/workspaces/${workspaceId}/projects/${projectId}/tasks/${taskId}`);
   }
+
+  /**
+   * 指定したユーザーのTime entryを取得する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} userId 【必須】Userを識別するID
+   * @param {Object} params
+   * @param {number} [page=1]
+   * @param {number} [pageSize=50]
+   * @return {Array<Object>} 処理結果
+   */
+  getUserTimeEntries(workspaceId, userId, params, page, pageSize) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!userId) throw new Error('"userId" must be specified');
+
+    params = params ? params : {};
+    if (page) params['page'] = page;
+    if (pageSize) params['page-size'] = pageSize;
+    return this.client_.fetchGet(`/workspaces/${workspaceId}/user/${userId}/time-entries`, params);
+  }
+
+  /**
+   * 指定したTime entryを取得する
+   * @param {string} workspaceId 【必須】Workspaceを識別するID
+   * @param {string} timeEntryId 【必須】Time entryを識別するID
+   * @return {Object} 処理結果
+   */
+  getSpecificTimeEntry(workspaceId, timeEntryId) {
+    if (!workspaceId) throw new Error('"workspaceId" must be specified');
+    if (!timeEntryId) throw new Error('"timeEntryId" must be specified');
+
+    return this.client_.fetchGet(`/workspaces/${workspaceId}/time-entries/${timeEntryId}`);
+  }
 }
