@@ -12,6 +12,7 @@ function testRunner() { // eslint-disable-line no-unused-vars
     testClientMethods_(test, common);
     testProjectMethods_(test, common);
     testTaskMethods_(test, common);
+    testTimeEntryMethods_(test, common);
     /***********************************************/
   } catch (error) {
     test('Exception occurred', function f(assert) {
@@ -171,5 +172,22 @@ function testTaskMethods_(test, common) {
     t.ok(deletedTask instanceof Object, 'Objectで取得できること');
 
     t.notOk(common.clockify.getSpecificTask(common.workspaceId, common.project.id, createdTask.id), 'Taskが存在しないこと');
+  });
+}
+
+function testTimeEntryMethods_(test, common) {
+  test('getUserTimeEntry()', function (t) {
+    // params指定なし
+    const timeEntries = common.clockify.getUserTimeEntry(common.workspaceId, common.userId);
+    t.ok(timeEntries.length > 0, 'データが取得できること');
+    t.ok(timeEntries[0] instanceof Object, 'Objectで取得できること');
+
+    // params指定あり
+    const timeEntry = common.clockify.getUserTimeEntry(common.workspaceId, common.userId, {
+      project: common.project.id,
+      start: '2021-10-01T00:00:00Z',
+      end: '2021-10-31T00:00:00Z',
+    });
+    t.deepEqual(timeEntry, common.timeEntry, 'Time entryのデータが正しいこと');
   });
 }
