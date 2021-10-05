@@ -176,18 +176,23 @@ function testTaskMethods_(test, common) {
 }
 
 function testTimeEntryMethods_(test, common) {
-  test('getUserTimeEntry()', function (t) {
+  test('getUserTimeEntries()', function (t) {
     // params指定なし
-    const timeEntries = common.clockify.getUserTimeEntry(common.workspaceId, common.userId);
+    const timeEntries = common.clockify.getUserTimeEntries(common.workspaceId, common.userId);
     t.ok(timeEntries.length > 0, 'データが取得できること');
     t.ok(timeEntries[0] instanceof Object, 'Objectで取得できること');
 
     // params指定あり
-    const timeEntry = common.clockify.getUserTimeEntry(common.workspaceId, common.userId, {
+    const timeEntry = common.clockify.getUserTimeEntries(common.workspaceId, common.userId, {
       project: common.project.id,
       start: '2021-10-01T00:00:00Z',
       end: '2021-10-31T00:00:00Z',
     });
+    t.deepEqual(timeEntry[0], common.timeEntry, 'Time entryのデータが正しいこと');
+  });
+
+  test('getSpecificTimeEntry()', function (t) {
+    const timeEntry = common.clockify.getSpecificTimeEntry(common.workspaceId, common.timeEntry.id);
     t.deepEqual(timeEntry, common.timeEntry, 'Time entryのデータが正しいこと');
   });
 }
